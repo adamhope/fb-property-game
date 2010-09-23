@@ -66,7 +66,7 @@ header hgroup {
   float: left;
   width: 350px;
   height: 144px;
-  background: url(../images/header.png) no-repeat;
+  background: url(/images/header.png) no-repeat;
 }
 
 hgroup * {
@@ -100,6 +100,7 @@ hgroup * {
 
 #game {
   clear: both;
+  position: relative;
 }
 
 .imageWrapper {
@@ -110,7 +111,6 @@ hgroup * {
   display: block;
   float: left;
   border-top: 1px solid #f2f2f2;
-  position: relative;
 }
 
 .imageWrapper:hover {
@@ -124,12 +124,12 @@ hgroup * {
 
 .postNote {
   display: none;
-  background: url(../images/postNote.png) no-repeat 50% 0;
+  background: url(/images/postNote.png) no-repeat 50% 0;
   position: absolute;
   z-index: 2;
   width: 200px;
   height: 180px;
-  top: 100px;
+  top: 120px;
   padding: 40px;
 }
 
@@ -143,6 +143,33 @@ hgroup * {
 
 .postNote h1 {
   font-size: 2.4em;
+}
+
+.resultMessage {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 320px;
+  position: absolute;
+  left: 210px;
+  top: 30px;
+  display: none;
+}
+
+.resultMessageContent {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  padding: 25px 10px;
+  color: #fff;
+  font-size: 2em;
+  background-color: rgba(76, 76, 76, 0.8);
+}
+
+.resultMessage strong {
+  background: url(/images/icons.png) no-repeat 0 0;
+  padding: 15px 0 15px 85px;
 }
 
 
