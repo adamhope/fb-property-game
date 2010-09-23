@@ -129,3 +129,43 @@ FB.getLoginStatus(function (response) {
     document.getElementById('publish').onclick = publish;
 
 });
+
+
+(function () {
+    
+    var randomListing = '/listings/random.json',
+        listingA = {},
+        listingB = {};
+    
+    function displayListing(selector, data) {
+        console.debug(selector, data);
+        $(selector).html(data.price_view);
+    }
+    
+    function displayListingA() {
+        displayListing('.imageWrapper.first', listingA);
+    }
+    
+    function displayListingB() {
+        displayListing('.imageWrapper.second', listingB)
+    }
+    
+    function init() {
+        $.get(randomListing, function (data) {
+            listingA = data.listing;
+            $.get(randomListing, function (data) {
+                listingB = data.listing;
+                displayListingA();
+                displayListingB();
+            });
+        });
+        
+        // put listing in game area
+        // flag most expensive listing
+        // attach click handler
+            // display message
+    }    
+     
+    init();
+       
+}());
