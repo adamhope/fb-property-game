@@ -94,7 +94,6 @@ hgroup * {
   -moz-border-radius: 6px 6px 0 0;
   -webkit-border-radius: 6px 6px 0 0;
   border-radius: 6px 6px 0 0;
-  font-family: 'Marker Felt';
 }
 
 /* game */
@@ -102,6 +101,7 @@ hgroup * {
 #game {
   clear: both;
   position: relative;
+  padding: 10px 0;
 }
 
 .imageWrapper {
@@ -144,5 +144,6 @@ hgroup * {
 
 
 footer {
-  clear: both;
+  text-align: right;
+  margin-top: 20px;
 }
