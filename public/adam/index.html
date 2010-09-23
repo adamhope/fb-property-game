@@ -1,45 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-	<title>2010 Innovation Day</title>
-	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="Adam Hope">
-	<!-- Date: 2010-09-23 -->
-	
-	<style>
-	   #publishWithUI:hover,
-	   #publish:hover {
-	       background-color: red;
-	   }
-	</style>
-	
-</head>
-<body>
+<html lang="en">
+  <head>
+   <title>Price Picker</title>
+   <meta charset="utf-8">
+   <!--[if lte IE 8]>
+     <script src="html5.js" type="text/javascript"></script>
+   <![endif]-->
+   <link rel='stylesheet' href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div id="fb-root">
+        <script src="http://connect.facebook.net/en_US/all.js"></script>
+    </div>
 
-<div id="fb-root">
- <script src="http://connect.facebook.net/en_US/all.js"></script>
-</div>
+      <p><a href="https://graph.facebook.com/oauth/authorize?client_id=152928198072579&redirect_uri=http://apps.facebook.com/innovation_winner/&scope=publish_stream&type=user_agent&display=popup">Allow full access</a></p>
 
-<fb:login-button perms="email"></fb:login-button>
+    <div id="fbWrapper">
+      <header class="floatClear">
+        <hgroup>
+          <h1>realestate.com.au price picker</h1>
+          <h2>Click the property you think is worth more</h2>
+        </hgroup>
+        <aside class="scoreboard">
+          <h1>Scoreboard</h1>
+          <div id="my_fb_avatar"><img src="#" alt="fb avatar" /></div>
+          <ul>
+            <li>Score: <span class="score">XXX</span></li>
+            <li>Best streak: <span class="best_streak">XXX</span></li>
+            <li>Streak: <span class="streak">XXX</span></li>
+          </ul>
+        </aside>
+      </header>
+      <section id="game">
+        <a href="#" class="imageWrapper first">
+          <img src="http://images1.au.reastatic.net/355x265/props/106784024/Main@20Feature/20100921152812.jpg" />
+        </a>
+        <div class="postNote">
+          <h1>$780,000</h1>
+          <h2>South Yarra</h2>
+          <h3>4 bedrooms</h3>
+          <h4>3 bathrooms</h4>
+        </div>
+        <a href="#" class="imageWrapper second">
+          <img src="http://images2.au.reastatic.net/355x265/props/106850260/Main@20Feature/20100921130219.jpg" />
+        </a>
+        <div class="postNote">
+          <h1>$780,000</h1>
+          <h2>South Yarra</h2>
+          <h3>4 bedrooms</h3>
+          <h4>3 bathrooms</h4>
+        </div>
+      </section>
+      <footer>
+        Powered by realestate.com.au
+      </footer>
+    </div>
 
-<h3>My details</h3>
-<div id="me">ME</div>
-
-<h3>My friends</h3>
-<div id="profile_pics">FRIENDS</div>
-
-<p><a href="https://graph.facebook.com/oauth/authorize?client_id=152928198072579&redirect_uri=http://apps.facebook.com/innovation_winner/&scope=publish_stream&type=user_agent&display=popup">Allow full access</a></p>
-
-<h3>Publish to stream</h3>
-<span id="publishWithUI">Put stuff in the stream (with UI)</span> | <span id="publish">Put stuff in the stream</span>
-
-<h3>Useful functions</h3>
-<a href="javascript:getUserID()">Get User ID</a> | <a href="javascript:getFriendIDs()">Get Friend IDs</a>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script src="javascript.js"></script>
-
-</body>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+    <script src="/javascript/game.js"></script>
+    
+  </body>
 </html>
+
+
+
 
