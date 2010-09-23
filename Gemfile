@@ -4,6 +4,7 @@ gem 'rails', '3.0.0'
 gem 'httparty', '0.6.1'
 
 group :production do
+  gem 'memcache-client', '1.8.5'
   gem 'memcached-northscale', '0.19.5.4', :require => 'memcached'
 end
 
