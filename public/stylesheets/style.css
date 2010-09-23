@@ -130,8 +130,17 @@ hgroup * {
   z-index: 2;
   width: 240px;
   height: 223px;
+  top: 100px;
 }
 
+.first .postNote {
+  left: 40px;
+}
+
+
+.second .postNote {
+  right: 50px;
+}
 
 
 footer {
