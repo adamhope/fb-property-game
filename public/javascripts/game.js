@@ -136,7 +136,7 @@ function publish() {
         bestStreak = 0,
         guesses = 0,
         incorrectGuess = 0,
-        limit = 10,
+        lives = 10,
         uid;
 
     // TODO Might need to use this as the INIT for the whole app
@@ -160,7 +160,8 @@ function publish() {
                     '<td>' + user.high_score + '</td></tr>';
         }
         html += '</table>';
-        $('#leaderboard').html(html);
+        $('.resultMessage strong').html(html);
+        // TODO PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
     }
 
@@ -204,8 +205,9 @@ function publish() {
         $('.score').html(score);
         $('.highScore').html(high_score);
         $('.streak').html(streak);
-        $('.guesses').html(guesses);
+        $('.lives').html(lives);
         $('.bestStreak').html(bestStreak);
+        // TODO make submit score a seperate function
         if (win) {
             url = '/user/' + uid + '.json?score=' + score + '&streak=' + bestStreak;
             data = 'uid';
@@ -257,11 +259,6 @@ function publish() {
         $('.resultMessage').show();
     }
 
-    function gameOver() {
-        // TODO display leaderboard
-        // TODO do all score posting here
-    }
-
     function win() {
         popupMessage('You win!');
         updateScoreboard('win');
@@ -270,14 +267,17 @@ function publish() {
     }
 
     function lose() {
-        popupMessage('You lose!');
+        lives = lives - 1;
+        if (lives <= 0) {
+            disableGuessing();
+            updateLeaderBoard();
+            // TODO do all score posting here
+        } else {
+            popupMessage('You lose!');
+        }
         updateScoreboard();
-        incorrectGuess = incorrectGuess + 1;
         displayListingADetails();
         displayListingBDetails();
-        if (incorrectGuess >= limit) {
-            gameOver();
-        }
     }
 
     function disableGuessing() {
@@ -324,9 +324,9 @@ function publish() {
     function init() {
         getMyFBDetails();
         setupNewGame();
+        $('.lives').html(lives);
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNewGame);
-        $('#showLeaderboard').click(updateLeaderBoard);
     }
     
     init();
