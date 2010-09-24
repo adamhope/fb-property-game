@@ -199,7 +199,7 @@ hgroup * {
   padding: 25px 10px 15px;
   color: #fff;
   font-size: 2.6em;
-  background-color: rgba(76, 76, 76, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .resultMessage strong {
@@ -246,4 +246,3 @@ footer strong a {
   display: inline-block;
   text-indent: 10000px;
 }
-

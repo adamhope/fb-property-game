@@ -75,16 +75,16 @@ FB.Event.subscribe('auth.login', function (response) {
 //     });
 // }
 
-function publish() {
-    var body = 'Price Picker, in your stream spamming your "friends"';
-    FB.api('/me/feed', 'post', { body: body }, function (response) {
-        if (!response || response.error) {
-            // console.debug('Error occured');
-        } else {
-            // console.debug('Post ID: ' + response);
-        }
-    });
-}
+// function publish() {
+//     var body = 'Price Picker, in your stream spamming your "friends"';
+//     FB.api('/me/feed', 'post', { body: body }, function (response) {
+//         if (!response || response.error) {
+//             // console.debug('Error occured');
+//         } else {
+//             // console.debug('Post ID: ' + response);
+//         }
+//     });
+// }
 
 // function getUserID() {
 //     FB.api('/me', function (response) {
@@ -130,7 +130,7 @@ function publish() {
         listingB       = {},
         mostExpensive,
         canGuess,
-        startingLives = 3,
+        startingLives = 1,
         score = 0,
         high_score = 0,
         streak = 0,
@@ -149,6 +149,49 @@ function publish() {
         });
     }
 
+    function publishWithUI(msg) {
+        FB.api({
+            method: 'stream.publish',
+            message: msg,
+            attachment: {
+                name: 'Price Picker',
+                caption: 'An awesome innovation',
+                description: (
+                    'Price Picker, more innovative than your mum - and more fun!'
+                ),
+                href: 'http://apps.facebook.com/innovation_winner/'
+            },
+            action_links: [
+                {text: 'Code', href: 'http://apps.facebook.com/innovation_winner/'}
+            ],
+            user_message_prompt: 'Tell your friends they suck if they\'re not playing Price Picker'
+        },
+        function (response) {
+            if (response && response.post_id) {
+                // alert('Post was published.');
+            } else {
+                // alert('Post was not published.');
+            }
+        });
+    }
+
+    function publish(msg) {
+        FB.api('/me/feed', 'post', {
+            message: msg
+        }, function (response) {
+            if (!response || response.error) {
+                console.debug('Error occured');
+            } else {
+                console.debug('Post ID: ' + response);
+            }
+        });
+    }
+
+    function publishScore() {
+        var msg = 'I just scored ' + score + ' in Price Picker, why aren\'t you playing?';
+        publishWithUI(msg);
+    }
+
     function drawLeaderBoard(data) {
         var i,
             user,
@@ -160,13 +203,14 @@ function publish() {
                     '<td>' + user.best_streak + '</td>' +
                     '<td>' + user.high_score + '</td></tr>';
         }
-        html += '</table><p id="tryAgain">TRY AGAIN</p>';
+        html += '</table><p><span id="tryAgain" class="button">TRY AGAIN</span><span id="publish" class="button">Share Your Score</span></p>';
         $('.resultMessage strong').html(html);
         $('.resultMessage strong')[0].className = '';
         $('.resultMessage').show();
         // TODO ADD PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
         $('#tryAgain').click(setupNextTurn);
+        $('#publish').click(publishScore);
     }
 
     function displayLeaderBoard() {
@@ -215,7 +259,6 @@ function publish() {
         if (win) {
             url = '/user/' + uid + '.json?score=' + score + '&streak=' + bestStreak;
             data = 'uid';
-            // console.debug('posting score:', url);
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -236,7 +279,7 @@ function publish() {
         $('.address', ctx).html(data.suburb + ', ' + data.state + ', ' + data.postcode);
         $('.bedrooms', ctx).html(data.bedrooms);
         $('.bathrooms', ctx).html(data.bathrooms);
-        // console.debug($('.infoLink', ctx), data.id);
+
         $('.infoLink', ctx).attr({href: 'http://www.realestate.com.au/' + data.id});
         $(ctx).show();
     }
@@ -275,7 +318,7 @@ function publish() {
     }
 
     function win() {
-        popupMessage('You win!', 'win');
+        popupMessage('You rock!', 'win');
         updateScoreboard('win');
         displayListingADetails();
         displayListingBDetails();
@@ -288,7 +331,7 @@ function publish() {
             displayLeaderBoard();
             // TODO do all score posting here
         } else {
-            popupMessage('You lose!', 'lose');
+            popupMessage('You suck!', 'lose');
         }
         updateScoreboard();
         displayListingADetails();
