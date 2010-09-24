@@ -130,7 +130,7 @@ FB.Event.subscribe('auth.login', function (response) {
         listingB       = {},
         mostExpensive,
         canGuess,
-        startingLives = 1,
+        startingLives = 3,
         score = 0,
         high_score = 0,
         streak = 0,
@@ -377,6 +377,7 @@ FB.Event.subscribe('auth.login', function (response) {
         // NOTE do not reset best streak or high score
         lives = startingLives;
         $('.lives').html(lives);
+        $('.score').html(score);
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNextTurn);
         setupNextTurn();

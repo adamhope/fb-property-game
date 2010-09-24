@@ -266,5 +266,7 @@ footer strong a span {
   box-shadow: 0px 2px 4px #707070;
   text-decoration: none;
   color: #000;
+  font-size: 18px;
+  margin-left: 4px;
 }
 
