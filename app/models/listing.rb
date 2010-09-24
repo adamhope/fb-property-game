@@ -12,14 +12,14 @@ class Listing < ActiveRecord::Base
     FbPropertyGame::Application.config.image_base_url + image_url
   end
 
-  def as_json
+  def as_json(options=nil)
     {
       :id         => id,
       :price      => price,
       :price_view => price_view,
       :bedrooms   => bedrooms,
       :bathrooms  => bathrooms,
-      :suburb     => suburb.downcase.gsub(/\b([a-z])/) { |match| match.upcase },
+      :suburb     => suburb.downcase.gsub(/\s+/, ' ').gsub(/\b([a-z])/) { |match| match.upcase },
       :state      => state.upcase,
       :postcode   => postcode,
       :image_url  => full_image_url,
@@ -34,5 +34,18 @@ class Listing < ActiveRecord::Base
     ## TODO expand search if total is zero?
     total = where({ :price => price_min..price_max }).size
     find(:first, :offset => rand(total), :conditions => { :price => (price_min..price_max) })
+  end
+
+  class ListingImageFinder
+    include HTTParty
+    base_uri 'http://www.realestate.com.au'
+
+    def self.get_listing_page(listing)
+      get("/#{listing.id}")
+    end
+  end
+
+  def lookup_image_url
+    ListingImageFinder.get_listing_page(self)
   end
 end
