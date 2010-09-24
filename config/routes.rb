@@ -6,6 +6,6 @@ FbPropertyGame::Application.routes.draw do
 
   match '/users/:ids',               :to => 'users#show',           :via => :get
   match '/user/:id',                 :to => 'users#show',           :via => :get
-  match '/user/:id',                 :to => 'users#update',         :via => :post
+  match '/user/:id',                 :to => 'users#update',         :via => [ :post, :put ]
 
 end
