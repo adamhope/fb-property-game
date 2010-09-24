@@ -101,6 +101,7 @@ hgroup * {
 #game {
   clear: both;
   position: relative;
+  height: 310px;
 }
 
 .imageWrapper {
@@ -113,13 +114,11 @@ hgroup * {
   border-top: 1px solid #f2f2f2;
 }
 
-.imageWrapper a {
+.imageWrapper .mainImage {
   display: block;
-  height: 255px;
+  height: 270px;
   width: 355px;
-  background-image: url(/images/loading.gif);
-  background-repeat: no-repeat;
-  background-position: center center;
+  background: url(/images/loading.gif) no-repeat center center;
 }
 
 .imageWrapper:hover {
@@ -128,7 +127,7 @@ hgroup * {
 }
 
 .first {
-  margin-right: 20px;
+  margin: 0 16px 0 3px;
 }
 
 .postNote {
@@ -136,7 +135,7 @@ hgroup * {
   background: url(/images/postNote.png) no-repeat 50% 0;
   position: absolute;
   z-index: 2;
-  width: 200px;
+  width: 170px;
   height: 180px;
   top: 120px;
   padding: 40px;
@@ -164,25 +163,38 @@ hgroup * {
   left: 210px;
   top: 30px;
   display: none;
+  z-index: 3;
 }
 
 .resultMessageContent {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  padding: 25px 10px;
+  padding: 25px 10px 15px;
   color: #fff;
-  font-size: 2em;
-  background-color: rgba(76, 76, 76, 0.8);
+  font-size: 2.6em;
+  background-color: rgba(76, 76, 76, 0.7);
 }
 
 .resultMessage strong {
-  background: url(/images/icons.png) no-repeat 0 0;
-  padding: 15px 0 15px 85px;
+  padding: 15px 0;
 }
 
+.resultMessage .win {
+  background: url(/images/icons.png) no-repeat 0 0;
+  padding-left: 85px;
+}
+
+.resultMessage .lose {
+  background: url(/images/icons.png) no-repeat 0 -130px;
+  padding-left: 85px;
+}
 
 footer {
   text-align: right;
-  margin-top: 20px;
+  border-top: 1px solid #bdbdbd;
+  background: -moz-linear-gradient(rgb(229, 225, 225) 0%, rgb(255, 255, 255) 73%); 
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(229, 225, 225)), color-stop(73%, rgb(255, 255, 255)));
+  min-height: 100px;
+  padding: 15px;
 }
