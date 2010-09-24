@@ -197,7 +197,7 @@ FB.Event.subscribe('auth.login', function (response) {
         // TODO ADD PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
         $('#nextButton').hide();
-        $('#tryAgain').click(setupNextTurn);
+        $('#tryAgain').click(init);
         $('#publish').click(publishScore);
     }
 
