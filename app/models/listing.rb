@@ -33,7 +33,7 @@ class Listing < ActiveRecord::Base
     ## TODO find something more optimal - maybe ORDER BY RAND() ?
     ## TODO expand search if total is zero?
     total = where({ :price => price_min..price_max }).size
-    find(:first, :offset => rand(total), :conditions => { :price => (price_min..price_max) })
+    find(:first, :offset => rand(total), :conditions => { :price => (price_min..price_max) }) || random
   end
 
   class ListingImageFinder
