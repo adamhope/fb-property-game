@@ -150,7 +150,15 @@ hgroup * {
 }
 
 .postNote h1 {
-  font-size: 2.4em;
+  font-size: 2em;
+}
+
+.postNote ul {
+  list-style-type: none;
+}
+
+.postNote ul li {
+  padding-top: 4px;
 }
 
 .resultMessage {
