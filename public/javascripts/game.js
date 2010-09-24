@@ -136,7 +136,7 @@ function publish() {
         bestStreak = 0,
         guesses = 0,
         incorrectGuess = 0,
-        limit = 10,
+        lives = 3,
         uid;
 
     // TODO Might need to use this as the INIT for the whole app
@@ -151,7 +151,7 @@ function publish() {
     function drawLeaderBoard(data) {
         var i,
             user,
-            html = '<table><tr><th>Friend</th><th>Best Streak</th><th>High Score</th></tr>';
+            html = '<table id="leaderboard"><tr><th>Friend</th><th>Best Streak</th><th>High Score</th></tr>';
         for (i = 0; i < data.length; i++) {
             user = data[i];
             html += '<tr>' + 
@@ -159,9 +159,12 @@ function publish() {
                     '<td>' + user.best_streak + '</td>' +
                     '<td>' + user.high_score + '</td></tr>';
         }
-        html += '</table>';
-        $('#leaderboard').html(html);
+        html += '</table><p id="tryAgain">TRY AGAIN</p>';
+        $('.resultMessage strong').html(html);
+        $('.resultMessage').show();
+        // TODO ADD PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
+        $('#tryAgain').click(setupNewGame);
     }
 
     function updateLeaderBoard() {
@@ -204,8 +207,9 @@ function publish() {
         $('.score').html(score);
         $('.highScore').html(high_score);
         $('.streak').html(streak);
-        $('.guesses').html(guesses);
+        $('.lives').html(lives);
         $('.bestStreak').html(bestStreak);
+        // TODO make submit score a seperate function
         if (win) {
             url = '/user/' + uid + '.json?score=' + score + '&streak=' + bestStreak;
             data = 'uid';
@@ -257,11 +261,6 @@ function publish() {
         $('.resultMessage').show();
     }
 
-    function gameOver() {
-        // TODO display leaderboard
-        // TODO do all score posting here
-    }
-
     function win() {
         popupMessage('You win!');
         updateScoreboard('win');
@@ -270,14 +269,17 @@ function publish() {
     }
 
     function lose() {
-        popupMessage('You lose!');
+        lives = lives - 1;
+        if (lives <= 0) {
+            disableGuessing();
+            updateLeaderBoard();
+            // TODO do all score posting here
+        } else {
+            popupMessage('You lose!');
+        }
         updateScoreboard();
-        incorrectGuess = incorrectGuess + 1;
         displayListingADetails();
         displayListingBDetails();
-        if (incorrectGuess >= limit) {
-            gameOver();
-        }
     }
 
     function disableGuessing() {
@@ -316,7 +318,6 @@ function publish() {
                 enableGuessing();
                 // NOTE A must always be on the first, B must always be on the second
                 mostExpensive = (listingA.price > listingB.price) ? 'first' : 'second';
-                
             });
         });
     }    
@@ -324,9 +325,9 @@ function publish() {
     function init() {
         getMyFBDetails();
         setupNewGame();
+        $('.lives').html(lives);
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNewGame);
-        $('#showLeaderboard').click(updateLeaderBoard);
     }
     
     init();
