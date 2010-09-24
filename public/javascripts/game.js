@@ -11,78 +11,69 @@ FB.Event.subscribe('auth.login', function (response) {
     window.top.location = 'http://apps.facebook.com/innovation_winner/';
 });
 
-var profilePicsDiv = document.getElementById('profile_pics');
-var div            = document.getElementById('me');
-
-function showMe(response) {
-    var html;
-    FB.api('/me', function (response) {
-        html = '<table>';
-        for (var key in response) {
-            html += (
-                '<tr>' +
-                '<th>' + key + '</th>' +
-                '<td>' + response[key] + '</td>' +
-                '</tr>'
-            );
-        }
-        div.innerHTML = html;
-    });
-}
-
-function showFriends() {
-    FB.api({ method: 'friends.get' }, function (result) {
-        
-        var markup = '',
-            numFriends = result ? Math.min(5, result.length) : 0,
-            i;
-        
-        console.info('friends.get response', result);
-        
-        if (numFriends > 0) {
-            for (i = 0; i < numFriends; i++) {
-                markup += (
-                    '<fb:profile-pic size="square" ' + 'uid="' + result[i] + '" ' + 'facebook-logo="true"' + '></fb:profile-pic>'
-                );
-            }
-        }
-        profilePicsDiv.innerHTML = markup;
-        // showMe();
-        FB.XFBML.parse(profilePicsDiv);
-    });
-}
-
-// resize canvas
-// window.fbAsyncInit = function() {
-//   FB.Canvas.setAutoResize();
+// function showMe(response) {
+//     var html;
+//     FB.api('/me', function (response) {
+//         html = '<table>';
+//         for (var key in response) {
+//             html += (
+//                 '<tr>' +
+//                 '<th>' + key + '</th>' +
+//                 '<td>' + response[key] + '</td>' +
+//                 '</tr>'
+//             );
+//         }
+//         div.innerHTML = html;
+//     });
 // }
 
+// function showFriends() {
+//     FB.api({ method: 'friends.get' }, function (result) {
+//         
+//         var markup = '',
+//             numFriends = result ? Math.min(5, result.length) : 0,
+//             i;
+//         
+//         console.info('friends.get response', result);
+//         
+//         if (numFriends > 0) {
+//             for (i = 0; i < numFriends; i++) {
+//                 markup += (
+//                     '<fb:profile-pic size="square" ' + 'uid="' + result[i] + '" ' + 'facebook-logo="true"' + '></fb:profile-pic>'
+//                 );
+//             }
+//         }
+//         profilePicsDiv.innerHTML = markup;
+//         // showMe();
+//         FB.XFBML.parse(profilePicsDiv);
+//     });
+// }
 
-function publishWithUI() {
-    FB.ui({
-        method: 'stream.publish',
-        message: 'Price Picker rocks, why aren\'t you playing',
-        attachment: {
-            name: 'Price Picker',
-            caption: 'An awesome innovation',
-            description: (
-                'Price Picker, more innovative than your mum - and more fun!'
-            ),
-            href: 'http://apps.facebook.com/innovation_winner/'
-        },
-        action_links: [
-            {text: 'Code', href: 'http://apps.facebook.com/innovation_winner/'}
-        ],
-        user_message_prompt: 'Tell your friends they suck if they\'re not playing Price Picker'
-    },
-    function (response) {
-        if (response && response.post_id) {
-            // alert('Post was published.');
-        } else {
-            // alert('Post was not published.');
-        }
-    });
-}
+// function publishWithUI() {
+//     FB.ui({
+//         method: 'stream.publish',
+//         message: 'Price Picker rocks, why aren\'t you playing',
+//         attachment: {
+//             name: 'Price Picker',
+//             caption: 'An awesome innovation',
+//             description: (
+//                 'Price Picker, more innovative than your mum - and more fun!'
+//             ),
+//             href: 'http://apps.facebook.com/innovation_winner/'
+//         },
+//         action_links: [
+//             {text: 'Code', href: 'http://apps.facebook.com/innovation_winner/'}
+//         ],
+//         user_message_prompt: 'Tell your friends they suck if they\'re not playing Price Picker'
+//     },
+//     function (response) {
+//         if (response && response.post_id) {
+//             // alert('Post was published.');
+//         } else {
+//             // alert('Post was not published.');
+//         }
+//     });
+// }
 
 function publish() {
     var body = 'Price Picker, in your stream spamming your "friends"';
@@ -95,40 +86,40 @@ function publish() {
     });
 }
 
-function getUserID() {
-    FB.api('/me', function (response) {
-        console.debug(response.id);
-    });
-}
+// function getUserID() {
+//     FB.api('/me', function (response) {
+//         console.debug(response.id);
+//     });
+// }
 
-function getFriendIDs() {
-    FB.api({ method: 'friends.get' }, function (result) {
-        var numFriends = result ? Math.min(5, result.length) : 0,
-            friendIDs  = [],
-            i;        
-        if (numFriends > 0) {
-            for (i = 0; i < numFriends; i++) {
-                friendIDs.push(result[i]);
-            }
-        }
-        console.debug(friendIDs);
-    });
-}
-
-FB.getLoginStatus(function (response) {
-
-    if (!response.session) {
-        profilePicsDiv.innerHTML = '<em>You are not connected</em>';
-        return;
-    }
-
-    showMe();
-    showFriends();
-    
-    document.getElementById('publishWithUI').onclick = publishWithUI;
-    document.getElementById('publish').onclick = publish;
-
-});
+// function getFriendIDs() {
+//     FB.api({ method: 'friends.get' }, function (result) {
+//         var numFriends = result ? Math.min(5, result.length) : 0,
+//             friendIDs  = [],
+//             i;        
+//         if (numFriends > 0) {
+//             for (i = 0; i < numFriends; i++) {
+//                 friendIDs.push(result[i]);
+//             }
+//         }
+//         console.debug(friendIDs);
+//     });
+// }
+ 
+// FB.getLoginStatus(function (response) {
+// 
+//     if (!response.session) {
+//         profilePicsDiv.innerHTML = '<em>You are not connected</em>';
+//         return;
+//     }
+// 
+//     showMe();
+//     showFriends();
+//     
+//     document.getElementById('publishWithUI').onclick = publishWithUI;
+//     document.getElementById('publish').onclick = publish;
+// 
+// });
 
 
 (function () {
@@ -142,15 +133,44 @@ FB.getLoginStatus(function (response) {
         score = 0,
         streak = 0,
         bestStreak = 0,
-        guesses = 0;
+        guesses = 0,
+        uid;
 
+    // TODO Might need to use this as the INIT for the whole app
     function getMyFBDetails() {
         FB.api('/me', function (response) {
-            console.debug(response);
+            uid = response.id;
+            $('#my_fb_avatar').html('<fb:profile-pic size="square" ' + 'uid="' + uid + '" ' + 'facebook-logo="true"' + '></fb:profile-pic>');
+            FB.XFBML.parse(document.getElementById('my_fb_avatar'));
+            // console.debug(response);
+        });
+    }
+
+    function updateLeaderBoard() {
+        FB.api({ method: 'friends.get' }, function (result) {
+            var numFriends = result ? Math.min(5, result.length) : 0,
+                friendIDs  = [],
+                url,
+                i;        
+            if (numFriends > 0) {
+                for (i = 0; i < numFriends; i++) {
+                    friendIDs.push(result[i]);
+                }
+            }
+
+            url = '/users/' + friendIDs.join(',') + '.json';
+
+            console.debug(friendIDs);
+
+            $.get(url, function () {
+                console.debug(arguments);
+            });
+
         });
     }
 
     function updateScoreboard(win) {
+        var url, data;
         if (win) {
             streak = streak + 1;
             score  = score + 10 * streak;
@@ -164,6 +184,18 @@ FB.getLoginStatus(function (response) {
         $('.streak').html(streak);
         $('.guesses').html(guesses);
         $('.bestStreak').html(bestStreak);
+        if (win) {
+            url = '/user/' + uid + '.json?score=' + score + '&streak=' + streak;
+            data = 'uid';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function () {
+                    console.debug(arguments);
+                }
+            });
+        }
     }
 
     function displayListing(ctx, data) {
@@ -172,7 +204,7 @@ FB.getLoginStatus(function (response) {
 
     function displayListingDetails(ctx, data) {
         $('.price', ctx).html('$' + data.price);
-        $('.address', ctx).html(data.suburb + ', ' + data.postcode);
+        $('.address', ctx).html(data.suburb + ', ' + data.state + ', ' + data.postcode);
         $('.beds', ctx).html(data.bedrooms);
         $('.baths', ctx).html(data.bathrooms);
         $(ctx).show();
@@ -255,6 +287,7 @@ FB.getLoginStatus(function (response) {
      
     function init() {
         getMyFBDetails();
+        updateLeaderBoard();
         setupNewGame();
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNewGame);
