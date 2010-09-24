@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100924012629) do
+ActiveRecord::Schema.define(:version => 20100924013534) do
 
   create_table "listings", :force => true do |t|
     t.integer  "price"
@@ -29,7 +29,8 @@ ActiveRecord::Schema.define(:version => 20100924012629) do
     t.decimal  "facebook_id", :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "best_streak"
+    t.integer  "best_streak", :default => 0
+    t.integer  "score", :default => 0
   end
 
 end
