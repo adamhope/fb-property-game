@@ -202,3 +202,7 @@ footer {
 #leaderboard {
   font-size: 18px;
 }
+
+#leaderboard td {
+  padding: 4px;
+}
