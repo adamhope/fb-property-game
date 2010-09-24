@@ -46,6 +46,8 @@ class Listing < ActiveRecord::Base
   end
 
   def lookup_image_url
-    ListingImageFinder.get_listing_page(self)
+    response = ListingImageFinder.get_listing_page(self)
+    # parse response
+    # get #mainPhoto > a > img > @src
   end
 end
