@@ -133,37 +133,76 @@ FB.getLoginStatus(function (response) {
 
 (function () {
     
-    var randomListing = '/listings/random.json',
-        listingA = {},
-        listingB = {};
+    var randomListing  = '/listings/random.json',
+        similarListing = '/listings/similar_to/', // NOTE you need to append PROPERTY_ID.json
+        listingA       = {},
+        listingB       = {},
+        mostExpensive;
     
-    function displayListing(selector, data) {
-        console.debug(selector, data);
-        $(selector).html(data.price_view);
+    function displayListing(ctx, data) {
+        // console.debug('XXX', arguments);
+        $('img', ctx).attr({src: 'NEWSRC'});
     }
-    
+
+    function displayListingDetails(ctx, data) {
+        $('.price', ctx).html('$' + data.price);
+        $('.address', ctx).html(data.suburb + ', ' + data.postcode);
+        $('.beds', ctx).html(data.bedrooms);
+        $('.baths', ctx).html(data.bathrooms);
+    }
+
     function displayListingA() {
         displayListing('.imageWrapper.first', listingA);
     }
-    
+
     function displayListingB() {
-        displayListing('.imageWrapper.second', listingB)
+        displayListing('.imageWrapper.second', listingB);
+    }
+
+    function displayListingADetails() {
+        displayListingDetails('.first .postNote', listingA);
     }
     
+    function displayListingBDetails() {
+        displayListingDetails('.second .postNote', listingB);
+    }
+
+    function popupMessage(msg, icon) {
+        $('.resultMessage').html(msg).show();
+    }
+
+    function win() {
+        popupMessage('You win!');
+    }
+    
+    function lose() {
+        popupMessage('You lose!');
+    }
+
+    function guess(e) {
+        var correct = $(e.currentTarget).hasClass(mostExpensive);
+        displayListingADetails();
+        displayListingBDetails();
+        if (correct) {
+            win();
+        } else {
+            lose();
+        }
+    }
+
     function init() {
         $.get(randomListing, function (data) {
             listingA = data.listing;
-            $.get(randomListing, function (data) {
+            $.get(similarListing + listingA.id + '.json', function (data) {
                 listingB = data.listing;
+                console.debug(listingA, listingB);
                 displayListingA();
                 displayListingB();
+                // NOTE A must always be on the first, B must always be on the second
+                mostExpensive = (listingA.price > listingB.price) ? 'first' : 'second';
+                $('.imageWrapper').click(guess);
             });
         });
-        
-        // put listing in game area
-        // flag most expensive listing
-        // attach click handler
-            // display message
     }    
      
     init();
