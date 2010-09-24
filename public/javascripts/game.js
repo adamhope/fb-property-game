@@ -177,6 +177,7 @@ FB.Event.subscribe('auth.login', function (response) {
     function publishScore() {
         var msg = 'I just scored ' + score + ' in Price Picker, why aren\'t you playing?';
         publishWithUI(msg);
+        init();
     }
 
     function drawLeaderBoard(data) {
