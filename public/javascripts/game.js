@@ -131,12 +131,12 @@ FB.Event.subscribe('auth.login', function (response) {
         mostExpensive,
         canGuess,
         startingLives = 3,
-        score = 0,
-        high_score = 0,
-        streak = 0,
-        bestStreak = 0,
-        guesses = 0,
-        lives = 0,
+        score         = 0,
+        high_score    = 0,
+        streak        = 0,
+        bestStreak    = 0,
+        guesses       = 0,
+        lives         = 0,
         uid;
 
     // TODO Might need to use this as the INIT for the whole app
@@ -190,12 +190,13 @@ FB.Event.subscribe('auth.login', function (response) {
                     '<td>' + user.best_streak + '</td>' +
                     '<td>' + user.high_score + '</td></tr>';
         }
-        html += '</table><p><span id="tryAgain" class="button">TRY AGAIN</span><span id="publish" class="button">Share Your Score</span></p>';
+        html += '</table><p><span id="tryAgain" class="button">Try Again!</span><span id="publish" class="button">Share Your Score</span></p>';
         $('.resultMessage strong').html(html);
         $('.resultMessage strong')[0].className = '';
         $('.resultMessage').show();
         // TODO ADD PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
+        $('#nextButton').hide();
         $('#tryAgain').click(setupNextTurn);
         $('#publish').click(publishScore);
     }
@@ -300,12 +301,12 @@ FB.Event.subscribe('auth.login', function (response) {
         if (icon) {
             $('.resultMessage strong')[0].className = icon;
         }
-        // TODO change class for losing
         $('.resultMessage').show();
     }
 
     function win() {
         popupMessage('You rock!', 'win');
+        $('#nextButton').show();
         updateScoreboard('win');
         displayListingADetails();
         displayListingBDetails();
