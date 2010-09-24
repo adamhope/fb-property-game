@@ -144,6 +144,12 @@ FB.getLoginStatus(function (response) {
         bestStreak = 0,
         guesses = 0;
 
+    function getMyFBDetails() {
+        FB.api('/me', function (response) {
+            console.debug(response);
+        });
+    }
+
     function updateScoreboard(win) {
         if (win) {
             streak = streak + 1;
@@ -248,6 +254,7 @@ FB.getLoginStatus(function (response) {
     }    
      
     function init() {
+        getMyFBDetails();
         setupNewGame();
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNewGame);
