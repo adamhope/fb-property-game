@@ -137,11 +137,34 @@ FB.getLoginStatus(function (response) {
         similarListing = '/listings/similar_to/', // NOTE you need to append PROPERTY_ID.json
         listingA       = {},
         listingB       = {},
-        mostExpensive;
-    
+        mostExpensive,
+        canGuess,
+        score = 0,
+        streak = 0,
+        bestStreak = 0,
+        guesses = 0;
+
+    function initScoreboard() {
+        // TODO stuff
+    }
+
+    function updateScoreboard(win) {
+        if (win) {
+            streak = streak + 1;
+            score  = score + 10 * streak;
+        } else {
+            streak = 0;
+        }
+        $('.score').html(score);
+        $('.streak').html(streak);
+        $('.guesses').html(guesses);
+        if (streak > bestStreak) {
+            $('.bestStreak').html(bestStreak);
+        }
+    }
+
     function displayListing(ctx, data) {
-        // console.debug('XXX', arguments);
-        $('img', ctx).attr({src: 'NEWSRC'});
+        $('a', ctx).html('<img src="' + data.image_url + '">');
     }
 
     function displayListingDetails(ctx, data) {
@@ -173,14 +196,29 @@ FB.getLoginStatus(function (response) {
 
     function win() {
         popupMessage('You win!');
+        updateScoreboard('win');
     }
     
     function lose() {
         popupMessage('You lose!');
+        updateScoreboard();
+    }
+
+    function disableGuessing() {
+        canGuess = false;
+    }
+    
+    function enableGuessing() {
+        canGuess = true;
     }
 
     function guess(e) {
+        if (!canGuess) {
+            return;
+        }
         var correct = $(e.currentTarget).hasClass(mostExpensive);
+        guesses = guesses + 1;
+        disableGuessing();
         displayListingADetails();
         displayListingBDetails();
         if (correct) {
@@ -190,21 +228,28 @@ FB.getLoginStatus(function (response) {
         }
     }
 
-    function init() {
-        $.get(randomListing, function (data) {
-            listingA = data.listing;
-            $.get(similarListing + listingA.id + '.json', function (data) {
-                listingB = data.listing;
-                console.debug(listingA, listingB);
+    function setupNewGame() {
+        $('.resultMessage').hide();
+        $.get(randomListing, function (listing) {
+            listingA = listing;
+            $.get(similarListing + listingA.id + '.json', function (listing) {
+                listingB = listing;
                 displayListingA();
                 displayListingB();
+                enableGuessing();
                 // NOTE A must always be on the first, B must always be on the second
                 mostExpensive = (listingA.price > listingB.price) ? 'first' : 'second';
-                $('.imageWrapper').click(guess);
+                
             });
         });
     }    
      
+    function init() {
+        setupNewGame();
+        $('.imageWrapper').click(guess);
+        $('.resultMessage').click(setupNewGame);
+    }
+    
     init();
        
 }());

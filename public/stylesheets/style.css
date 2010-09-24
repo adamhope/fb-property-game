@@ -113,9 +113,18 @@ hgroup * {
   border-top: 1px solid #f2f2f2;
 }
 
+.imageWrapper a {
+  display: block;
+  height: 255px;
+  width: 355px;
+  background-image: url(/images/loading.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 .imageWrapper:hover {
-  border-color: #da1d16;
-  background-color: #da1d16;
+  border-color: #3B5998;
+  background-color: #3B5998;
 }
 
 .first {
