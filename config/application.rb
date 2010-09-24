@@ -38,5 +38,7 @@ module FbPropertyGame
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    config.image_base_url = 'http://images1.au.reastatic.net'
   end
 end
