@@ -142,8 +142,20 @@ function publish() {
             uid = response.id;
             $('#my_fb_avatar').html('<fb:profile-pic size="square" ' + 'uid="' + uid + '" ' + 'facebook-logo="true"' + '></fb:profile-pic>');
             FB.XFBML.parse(document.getElementById('my_fb_avatar'));
-            // console.debug(response);
         });
+    }
+
+    function drawLeaderBoard(data) {
+        var i,
+            user,
+            html = '<table><tr><th>Friend</th><th>Best Streak</th></tr>';
+        for (i = 0; i < data.length; i++) {
+            user = data[i];
+            html += '<tr><td><fb:profile-pic size="square" uid="' + user.id + '" facebook-logo="true"></fb:profile-pic>' + '</td><td>' + user.best_streak + '</td></tr>'
+        }
+        html += '</table>';
+        $('#leaderboard').html(html);
+        FB.XFBML.parse(document.getElementById('leaderboard'));
     }
 
     function updateLeaderBoard() {
@@ -158,12 +170,14 @@ function publish() {
                 }
             }
 
-            url = '/users/' + friendIDs.join(',') + '.json';
-
+            friendIDs.push(uid);
+            
             console.debug(friendIDs);
 
-            $.get(url, function () {
-                console.debug(arguments);
+            url = '/users/' + friendIDs.join(',') + '.json';
+
+            $.get(url, function (data) {
+                drawLeaderBoard(data);
             });
 
         });
@@ -185,8 +199,9 @@ function publish() {
         $('.guesses').html(guesses);
         $('.bestStreak').html(bestStreak);
         if (win) {
-            url = '/user/' + uid + '.json?score=' + score + '&streak=' + streak;
+            url = '/user/' + uid + '.json?score=' + score + '&streak=' + bestStreak;
             data = 'uid';
+            console.debug('posting score:', url);
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -199,14 +214,16 @@ function publish() {
     }
 
     function displayListing(ctx, data) {
-        $('a', ctx).html('<img src="' + data.image_url + '">');
+        $('a.mainImage', ctx).html('<img src="' + data.image_url + '">');
     }
 
     function displayListingDetails(ctx, data) {
         $('.price', ctx).html('$' + data.price);
         $('.address', ctx).html(data.suburb + ', ' + data.state + ', ' + data.postcode);
-        $('.beds', ctx).html(data.bedrooms);
-        $('.baths', ctx).html(data.bathrooms);
+        $('.bedrooms', ctx).html(data.bedrooms);
+        $('.bathrooms', ctx).html(data.bathrooms);
+        console.debug($('.infoLink', ctx), data.id);
+        $('.infoLink', ctx).attr({href: 'http://www.realestate.com.au/' + data.id});
         $(ctx).show();
     }
 
@@ -287,10 +304,10 @@ function publish() {
      
     function init() {
         getMyFBDetails();
-        updateLeaderBoard();
         setupNewGame();
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNewGame);
+        $('#showLeaderboard').click(updateLeaderBoard);
     }
     
     init();
