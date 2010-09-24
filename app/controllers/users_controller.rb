@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     if params[:ids]
       facebook_ids = params[:ids] ? params[:ids].split(',') : []
       users = facebook_ids.map { |id| User.find_or_create_by_facebook_id(id) }
-      respond_with users
+      respond_with users.sort_by { |user| user.high_score }.reverse
     elsif params[:id]
       facebook_id = params[:id]
       respond_with User.where({ :facebook_id => facebook_id }).first
