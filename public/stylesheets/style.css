@@ -235,22 +235,22 @@ footer {
 
 footer strong {
   display: block;
-  padding-top: 10px;
   margin-bottom: 15px;
 }
 
 /* TODO - this is crap */
 footer strong a {
-  background: url(/images/reaLogo.png) no-repeat 0 0;
-  height: 37px;
-  width: 191px;
   display: inline-block;
-  position: relative;
-  top: -5px;
 }
 
-footer strong a span {
-  display: none;
+footer strong span {
+  position: relative;
+  top: -16px;
+}
+
+footer small a {
+  font-size: 0.5em;
+  color: #000;
 }
 
 
