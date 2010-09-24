@@ -84,16 +84,33 @@ hgroup * {
   -webkit-box-shadow: 1px 5px 5px #ccc;
   -moz-box-shadow: 1px 5px 5px #ccc;
   box-shadow: 1px 5px 5px #ccc;
-  margin: 12px 4px 0 0;
+  margin: 0 4px 0 0;
+  padding: 3px 10px 10px;
 }
 
 .scoreboard h1 {
   color: #000;
   font-size: 1.1em;
-  padding: 6px 5px 5px 10px;
+  padding: 6px 5px 5px 0;
   -moz-border-radius: 6px 6px 0 0;
   -webkit-border-radius: 6px 6px 0 0;
   border-radius: 6px 6px 0 0;
+}
+
+.scoreboard li {
+  display: inline-block;
+  list-style-type: none;
+  width: 140px;
+  margin-bottom: 3px;
+}
+
+#my_fb_avatar {
+  width: 65px;
+  float: left;
+}
+
+.scoreboard ul {
+  margin-left: 65px;
 }
 
 /* game */
@@ -102,6 +119,7 @@ hgroup * {
   clear: both;
   position: relative;
   height: 310px;
+  margin-top: 20px;
 }
 
 .imageWrapper {
@@ -203,7 +221,7 @@ footer {
   border-top: 1px solid #bdbdbd;
   background: -moz-linear-gradient(rgb(229, 225, 225) 0%, rgb(255, 255, 255) 73%); 
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(229, 225, 225)), color-stop(73%, rgb(255, 255, 255)));
-  min-height: 100px;
+  min-height: 45px;
   padding: 15px;
 }
 
@@ -214,3 +232,18 @@ footer {
 #leaderboard td {
   padding: 4px;
 }
+
+footer strong {
+  display: block;
+  padding-top: 10px;
+  margin-bottom: 5px;
+}
+
+footer strong a {
+  background: url(/images/reaLogo.png) no-repeat 0 0;
+  height: 37px;
+  width: 191px;
+  display: inline-block;
+  text-indent: 10000px;
+}
+
