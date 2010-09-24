@@ -136,7 +136,6 @@ FB.Event.subscribe('auth.login', function (response) {
         streak = 0,
         bestStreak = 0,
         guesses = 0,
-        incorrectGuess = 0,
         lives = 0,
         uid;
 
@@ -171,18 +170,6 @@ FB.Event.subscribe('auth.login', function (response) {
                 // alert('Post was published.');
             } else {
                 // alert('Post was not published.');
-            }
-        });
-    }
-
-    function publish(msg) {
-        FB.api('/me/feed', 'post', {
-            message: msg
-        }, function (response) {
-            if (!response || response.error) {
-                console.debug('Error occured');
-            } else {
-                console.debug('Post ID: ' + response);
             }
         });
     }
