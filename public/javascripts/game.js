@@ -141,10 +141,18 @@ FB.Event.subscribe('auth.login', function (response) {
 
     // TODO Might need to use this as the INIT for the whole app
     function getMyFBDetails() {
+        var url;
         FB.api('/me', function (response) {
             uid = response.id;
             $('#my_fb_avatar').html('<fb:profile-pic size="square" ' + 'uid="' + uid + '" ' + 'facebook-logo="true"' + '></fb:profile-pic>');
             FB.XFBML.parse(document.getElementById('my_fb_avatar'));
+            
+            // set your highscore
+            url = '/user/' + uid + '.json';
+            $.get(url, function (data) {
+                $('.highScore').html(data.high_score);
+            });
+            
         });
     }
 
