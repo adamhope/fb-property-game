@@ -136,7 +136,7 @@ function publish() {
         bestStreak = 0,
         guesses = 0,
         incorrectGuess = 0,
-        lives = 10,
+        lives = 3,
         uid;
 
     // TODO Might need to use this as the INIT for the whole app
@@ -151,7 +151,7 @@ function publish() {
     function drawLeaderBoard(data) {
         var i,
             user,
-            html = '<table><tr><th>Friend</th><th>Best Streak</th><th>High Score</th></tr>';
+            html = '<table id="leaderboard"><tr><th>Friend</th><th>Best Streak</th><th>High Score</th></tr>';
         for (i = 0; i < data.length; i++) {
             user = data[i];
             html += '<tr>' + 
@@ -159,10 +159,12 @@ function publish() {
                     '<td>' + user.best_streak + '</td>' +
                     '<td>' + user.high_score + '</td></tr>';
         }
-        html += '</table>';
+        html += '</table><p id="tryAgain">TRY AGAIN</p>';
         $('.resultMessage strong').html(html);
-        // TODO PLAY AGAIN
+        $('.resultMessage').show();
+        // TODO ADD PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
+        $('#tryAgain').click(setupNewGame);
     }
 
     function updateLeaderBoard() {
@@ -316,7 +318,6 @@ function publish() {
                 enableGuessing();
                 // NOTE A must always be on the first, B must always be on the second
                 mostExpensive = (listingA.price > listingB.price) ? 'first' : 'second';
-                
             });
         });
     }    
