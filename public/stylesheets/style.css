@@ -253,7 +253,6 @@ footer small a {
   color: #000;
 }
 
-
 .button {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -268,5 +267,10 @@ footer small a {
   color: #000;
   font-size: 18px;
   margin-left: 4px;
+}
+
+.button:hover {
+  cursor: pointer;
+  color: #666;
 }
 
