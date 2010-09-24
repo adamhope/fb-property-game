@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100924030907) do
+ActiveRecord::Schema.define(:version => 20100924033446) do
 
   create_table "listings", :force => true do |t|
     t.integer  "price"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20100924030907) do
     t.datetime "updated_at"
     t.integer  "best_streak",                                :default => 0
     t.integer  "score",                                      :default => 0
+    t.integer  "high_score",                                 :default => 0
   end
 
   add_index "users", ["facebook_id"], :name => "user_facebook_id_uidx", :unique => true
