@@ -199,7 +199,7 @@ hgroup * {
   padding: 25px 10px 15px;
   color: #fff;
   font-size: 2.6em;
-  background-color: rgba(76, 76, 76, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .resultMessage strong {
@@ -235,15 +235,38 @@ footer {
 
 footer strong {
   display: block;
-  padding-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
+/* TODO - this is crap */
 footer strong a {
-  background: url(/images/reaLogo.png) no-repeat 0 0;
-  height: 37px;
-  width: 191px;
   display: inline-block;
-  text-indent: 10000px;
+}
+
+footer strong span {
+  position: relative;
+  top: -16px;
+}
+
+footer small a {
+  font-size: 0.5em;
+  color: #000;
+}
+
+
+.button {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  padding: 5px 8px;
+  background: -moz-linear-gradient(rgb(255, 255, 255) 76%, rgb(213, 205, 205) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(76%, rgb(255, 255, 255)), color-stop(100%, rgb(213, 205, 205)));
+  border: 2px solid #fff;
+  -webkit-box-shadow: 0px 2px 4px #707070;
+  -moz-box-shadow: 0px 2px 4px #707070;
+  box-shadow: 0px 2px 4px #707070;
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  margin-left: 4px;
 }
 
