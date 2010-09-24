@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   def show
     if params[:ids]
       facebook_ids = params[:ids] ? params[:ids].split(',') : []
-      respond_with User.where({ :facebook_id => facebook_ids }).all
+      users = facebook_ids.map { |id| User.find_or_create_by_facebook_id(id) }
+      respond_with users
     elsif params[:id]
       facebook_id = params[:id]
       respond_with User.where({ :facebook_id => facebook_id }).first
