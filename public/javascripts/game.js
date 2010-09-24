@@ -144,10 +144,6 @@ FB.getLoginStatus(function (response) {
         bestStreak = 0,
         guesses = 0;
 
-    function initScoreboard() {
-        // TODO stuff
-    }
-
     function updateScoreboard(win) {
         if (win) {
             streak = streak + 1;
@@ -155,12 +151,13 @@ FB.getLoginStatus(function (response) {
         } else {
             streak = 0;
         }
+        if (streak > bestStreak) {
+            bestStreak = streak;
+        }
         $('.score').html(score);
         $('.streak').html(streak);
         $('.guesses').html(guesses);
-        if (streak > bestStreak) {
-            $('.bestStreak').html(bestStreak);
-        }
+        $('.bestStreak').html(bestStreak);
     }
 
     function displayListing(ctx, data) {
@@ -172,6 +169,7 @@ FB.getLoginStatus(function (response) {
         $('.address', ctx).html(data.suburb + ', ' + data.postcode);
         $('.beds', ctx).html(data.bedrooms);
         $('.baths', ctx).html(data.bathrooms);
+        $(ctx).show();
     }
 
     function displayListingA() {
@@ -197,11 +195,15 @@ FB.getLoginStatus(function (response) {
     function win() {
         popupMessage('You win!');
         updateScoreboard('win');
+        displayListingADetails();
+        displayListingBDetails();
     }
-    
+
     function lose() {
         popupMessage('You lose!');
         updateScoreboard();
+        displayListingADetails();
+        displayListingBDetails();
     }
 
     function disableGuessing() {
@@ -230,6 +232,7 @@ FB.getLoginStatus(function (response) {
 
     function setupNewGame() {
         $('.resultMessage').hide();
+        $('.postNote').hide();
         $.get(randomListing, function (listing) {
             listingA = listing;
             $.get(similarListing + listingA.id + '.json', function (listing) {
