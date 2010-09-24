@@ -18,6 +18,10 @@ class UsersController < ApplicationController
     user.score       = params[:score].to_i if params[:score]
     user.best_streak = params[:streak].to_i if params[:streak]
     user.save
+
+    respond_with(user) do |format|
+      format.json { render :json => user }
+    end
   end
 
 end
