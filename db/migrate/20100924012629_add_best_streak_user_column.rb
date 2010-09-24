@@ -1,6 +1,6 @@
 class AddBestStreakUserColumn < ActiveRecord::Migration
   def self.up
-    add_column :users, :best_streak, :integer
+    add_column :users, :best_streak, :integer, :default => 0
   end
 
   def self.down

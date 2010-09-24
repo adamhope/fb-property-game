@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(:version => 20100924013534) do
     t.decimal  "facebook_id", :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "best_streak"
-    t.integer  "score"
+    t.integer  "best_streak", :default => 0
+    t.integer  "score", :default => 0
   end
 
 end
