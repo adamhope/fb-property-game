@@ -29,13 +29,13 @@ FB.Event.subscribe('auth.login', function (response) {
 
 // function showFriends() {
 //     FB.api({ method: 'friends.get' }, function (result) {
-//         
+//
 //         var markup = '',
 //             numFriends = result ? Math.min(5, result.length) : 0,
 //             i;
-//         
+//
 //         console.info('friends.get response', result);
-//         
+//
 //         if (numFriends > 0) {
 //             for (i = 0; i < numFriends; i++) {
 //                 markup += (
@@ -96,7 +96,7 @@ function publish() {
 //     FB.api({ method: 'friends.get' }, function (result) {
 //         var numFriends = result ? Math.min(5, result.length) : 0,
 //             friendIDs  = [],
-//             i;        
+//             i;
 //         if (numFriends > 0) {
 //             for (i = 0; i < numFriends; i++) {
 //                 friendIDs.push(result[i]);
@@ -105,38 +105,39 @@ function publish() {
 //         console.debug(friendIDs);
 //     });
 // }
- 
+
 // FB.getLoginStatus(function (response) {
-// 
+//
 //     if (!response.session) {
 //         profilePicsDiv.innerHTML = '<em>You are not connected</em>';
 //         return;
 //     }
-// 
+//
 //     showMe();
 //     showFriends();
-//     
+//
 //     document.getElementById('publishWithUI').onclick = publishWithUI;
 //     document.getElementById('publish').onclick = publish;
-// 
+//
 // });
 
 
 (function () {
-    
+
     var randomListing  = '/listings/random.json',
         similarListing = '/listings/similar_to/', // NOTE you need to append PROPERTY_ID.json
         listingA       = {},
         listingB       = {},
         mostExpensive,
         canGuess,
+        startingLives = 3,
         score = 0,
         high_score = 0,
         streak = 0,
         bestStreak = 0,
         guesses = 0,
         incorrectGuess = 0,
-        lives = 3,
+        lives = 0,
         uid;
 
     // TODO Might need to use this as the INIT for the whole app
@@ -154,25 +155,26 @@ function publish() {
             html = '<table id="leaderboard"><tr><th>Friend</th><th>Best Streak</th><th>High Score</th></tr>';
         for (i = 0; i < data.length; i++) {
             user = data[i];
-            html += '<tr>' + 
+            html += '<tr>' +
                     '<td><fb:profile-pic size="square" uid="' + user.id + '" facebook-logo="true"></fb:profile-pic>' + '</td>' +
                     '<td>' + user.best_streak + '</td>' +
                     '<td>' + user.high_score + '</td></tr>';
         }
         html += '</table><p id="tryAgain">TRY AGAIN</p>';
         $('.resultMessage strong').html(html);
+        $('.resultMessage strong')[0].className = '';
         $('.resultMessage').show();
         // TODO ADD PLAY AGAIN
         FB.XFBML.parse(document.getElementById('leaderboard'));
-        $('#tryAgain').click(setupNewGame);
+        $('#tryAgain').click(setupNextTurn);
     }
 
-    function updateLeaderBoard() {
+    function displayLeaderBoard() {
         FB.api({ method: 'friends.get' }, function (result) {
             var numFriends = result ? Math.min(5, result.length) : 0,
                 friendIDs  = [],
                 url,
-                i;        
+                i;
             if (numFriends > 0) {
                 for (i = 0; i < numFriends; i++) {
                     friendIDs.push(result[i]);
@@ -250,19 +252,30 @@ function publish() {
     function displayListingADetails() {
         displayListingDetails('.first .postNote', listingA);
     }
-    
+
     function displayListingBDetails() {
         displayListingDetails('.second .postNote', listingB);
     }
 
+    function disableGuessing() {
+        canGuess = false;
+    }
+
+    function enableGuessing() {
+        canGuess = true;
+    }
+
     function popupMessage(msg, icon) {
         $('.resultMessage strong').html(msg).show();
+        if (icon) {
+            $('.resultMessage strong')[0].className = icon;
+        }
         // TODO change class for losing
         $('.resultMessage').show();
     }
 
     function win() {
-        popupMessage('You win!');
+        popupMessage('You win!', 'win');
         updateScoreboard('win');
         displayListingADetails();
         displayListingBDetails();
@@ -272,22 +285,14 @@ function publish() {
         lives = lives - 1;
         if (lives <= 0) {
             disableGuessing();
-            updateLeaderBoard();
+            displayLeaderBoard();
             // TODO do all score posting here
         } else {
-            popupMessage('You lose!');
+            popupMessage('You lose!', 'lose');
         }
         updateScoreboard();
         displayListingADetails();
         displayListingBDetails();
-    }
-
-    function disableGuessing() {
-        canGuess = false;
-    }
-    
-    function enableGuessing() {
-        canGuess = true;
     }
 
     function guess(e) {
@@ -306,7 +311,7 @@ function publish() {
         }
     }
 
-    function setupNewGame() {
+    function setupNextTurn() {
         $('.resultMessage').hide();
         $('.postNote').hide();
         $.get(randomListing, function (listing) {
@@ -320,16 +325,20 @@ function publish() {
                 mostExpensive = (listingA.price > listingB.price) ? 'first' : 'second';
             });
         });
-    }    
-     
+    }
+
     function init() {
         getMyFBDetails();
-        setupNewGame();
+        score = 0;
+        streak = 0;
+        // NOTE do not reset best streak or high score
+        lives = startingLives;
         $('.lives').html(lives);
         $('.imageWrapper').click(guess);
-        $('.resultMessage').click(setupNewGame);
+        $('.resultMessage').click(setupNextTurn);
+        setupNextTurn();
     }
-    
+
     init();
-       
+
 }());

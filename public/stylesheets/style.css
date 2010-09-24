@@ -198,3 +198,7 @@ footer {
   min-height: 100px;
   padding: 15px;
 }
+
+#leaderboard {
+  font-size: 18px;
+}
