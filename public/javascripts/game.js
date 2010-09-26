@@ -185,7 +185,7 @@ FB.Event.subscribe('auth.login', function (response) {
     function publishScore() {
         var msg = 'I just scored ' + score + ' in Price Picker, why aren\'t you playing?';
         publishWithUI(msg);
-        init();
+        setupNewGame();
     }
 
     function drawLeaderBoard(data) {
@@ -367,7 +367,7 @@ FB.Event.subscribe('auth.login', function (response) {
         });
     }
 
-    function init() {
+    function setupNewGame() {
         getMyFBDetails();
         score = 0;
         streak = 0;
@@ -375,9 +375,14 @@ FB.Event.subscribe('auth.login', function (response) {
         lives = startingLives;
         $('.lives').html(lives);
         $('.score').html(score);
+        setupNextTurn();
+    }
+
+    function init() {
+        // NOTE events should only be setup once
         $('.imageWrapper').click(guess);
         $('.resultMessage').click(setupNextTurn);
-        setupNextTurn();
+        setupNewGame();
     }
 
     init();
