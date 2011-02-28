@@ -8,7 +8,7 @@ FB.init({ apiKey: 'f89c4f0186a4f2181fb7320263679c6c', status: true, cookie: true
 
 FB.Event.subscribe('auth.login', function (response) {
     // Reload the application in the logged-in state
-    window.top.location = 'http://apps.facebook.com/innovation_winner/';
+    window.top.location = 'http://apps.facebook.com/price-picker/';
 });
 
 // function showMe(response) {
@@ -166,10 +166,10 @@ FB.Event.subscribe('auth.login', function (response) {
                 description: (
                     'Price Picker, more innovative than your mum - and more fun!'
                 ),
-                href: 'http://apps.facebook.com/innovation_winner/'
+                href: 'http://apps.facebook.com/price-picker/'
             },
             action_links: [
-                {text: 'Code', href: 'http://apps.facebook.com/innovation_winner/'}
+                {text: 'Code', href: 'http://apps.facebook.com/price-picker/'}
             ],
             user_message_prompt: 'Tell your friends they suck if they\'re not playing Price Picker'
         },
