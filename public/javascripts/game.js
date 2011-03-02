@@ -11,116 +11,6 @@ FB.Event.subscribe('auth.login', function (response) {
     window.top.location = 'http://apps.facebook.com/price-picker/';
 });
 
-// function showMe(response) {
-//     var html;
-//     FB.api('/me', function (response) {
-//         html = '<table>';
-//         for (var key in response) {
-//             html += (
-//                 '<tr>' +
-//                 '<th>' + key + '</th>' +
-//                 '<td>' + response[key] + '</td>' +
-//                 '</tr>'
-//             );
-//         }
-//         div.innerHTML = html;
-//     });
-// }
-
-// function showFriends() {
-//     FB.api({ method: 'friends.get' }, function (result) {
-//
-//         var markup = '',
-//             numFriends = result ? Math.min(5, result.length) : 0,
-//             i;
-//
-//         console.info('friends.get response', result);
-//
-//         if (numFriends > 0) {
-//             for (i = 0; i < numFriends; i++) {
-//                 markup += (
-//                     '<fb:profile-pic size="square" ' + 'uid="' + result[i] + '" ' + 'facebook-logo="true"' + '></fb:profile-pic>'
-//                 );
-//             }
-//         }
-//         profilePicsDiv.innerHTML = markup;
-//         // showMe();
-//         FB.XFBML.parse(profilePicsDiv);
-//     });
-// }
-
-// function publishWithUI() {
-//     FB.ui({
-//         method: 'stream.publish',
-//         message: 'Price Picker rocks, why aren\'t you playing',
-//         attachment: {
-//             name: 'Price Picker',
-//             caption: 'An awesome innovation',
-//             description: (
-//                 'Price Picker, more innovative than your mum - and more fun!'
-//             ),
-//             href: 'http://apps.facebook.com/innovation_winner/'
-//         },
-//         action_links: [
-//             {text: 'Code', href: 'http://apps.facebook.com/innovation_winner/'}
-//         ],
-//         user_message_prompt: 'Tell your friends they suck if they\'re not playing Price Picker'
-//     },
-//     function (response) {
-//         if (response && response.post_id) {
-//             // alert('Post was published.');
-//         } else {
-//             // alert('Post was not published.');
-//         }
-//     });
-// }
-
-// function publish() {
-//     var body = 'Price Picker, in your stream spamming your "friends"';
-//     FB.api('/me/feed', 'post', { body: body }, function (response) {
-//         if (!response || response.error) {
-//             // console.debug('Error occured');
-//         } else {
-//             // console.debug('Post ID: ' + response);
-//         }
-//     });
-// }
-
-// function getUserID() {
-//     FB.api('/me', function (response) {
-//         console.debug(response.id);
-//     });
-// }
-
-// function getFriendIDs() {
-//     FB.api({ method: 'friends.get' }, function (result) {
-//         var numFriends = result ? Math.min(5, result.length) : 0,
-//             friendIDs  = [],
-//             i;
-//         if (numFriends > 0) {
-//             for (i = 0; i < numFriends; i++) {
-//                 friendIDs.push(result[i]);
-//             }
-//         }
-//         console.debug(friendIDs);
-//     });
-// }
-
-// FB.getLoginStatus(function (response) {
-//
-//     if (!response.session) {
-//         profilePicsDiv.innerHTML = '<em>You are not connected</em>';
-//         return;
-//     }
-//
-//     showMe();
-//     showFriends();
-//
-//     document.getElementById('publishWithUI').onclick = publishWithUI;
-//     document.getElementById('publish').onclick = publish;
-//
-// });
-
 
 (function () {
 
@@ -164,14 +54,14 @@ FB.Event.subscribe('auth.login', function (response) {
                 name: 'Price Picker',
                 caption: 'An awesome innovation',
                 description: (
-                    'Price Picker, more innovative than your mum - and more fun!'
+                    'Price Picker, you have never had this much fun!'
                 ),
                 href: 'http://apps.facebook.com/price-picker/'
             },
             action_links: [
                 {text: 'Code', href: 'http://apps.facebook.com/price-picker/'}
             ],
-            user_message_prompt: 'Tell your friends they suck if they\'re not playing Price Picker'
+            user_message_prompt: 'Tell your friends they should be playing Price Picker'
         },
         function (response) {
             if (response && response.post_id) {
@@ -328,7 +218,7 @@ FB.Event.subscribe('auth.login', function (response) {
             displayLeaderBoard();
             // TODO do all score posting here
         } else {
-            popupMessage('You suck!', 'lose');
+            popupMessage('FAIL!', 'lose');
         }
         updateScoreboard();
         displayListingADetails();
